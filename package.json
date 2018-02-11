@@ -1,0 +1,44 @@
+{
+  "name": "html-resource-embedder",
+  "version": "0.5.0",
+  "description": "Automatically embed resources directly into HTML to reduce HTTP round trips and increase page load speed.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tigermisu/html-resource-embedder.git"
+  },
+  "keywords": [
+    "html",
+    "resource",
+    "embedder",
+    "resource",
+    "embedder",
+    "increase",
+    "page",
+    "speed",
+    "fast",
+    "page",
+    "round",
+    "trips",
+    "speed"
+  ],
+  "author": "Christopher Jaquez <christopher@jaquez.mx> (https://jaquez.mx)",
+  "license": "MIT",
+  "bin": {
+    "html-embed": "./cli.js"
+  },
+  "bugs": {
+    "url": "https://github.com/Tigermisu/html-resource-embedder/issues"
+  },
+  "homepage": "https://github.com/Tigermisu/html-resource-embedder#readme",
+  "dependencies": {
+    "base64-img": "^1.0.3",
+    "chalk": "^2.3.0",
+    "cli-spinner": "^0.2.7",
+    "domutils": "^1.7.0",
+    "htmlparser2": "^3.9.2",
+    "meow": "^4.0.0"
+  }
+}
