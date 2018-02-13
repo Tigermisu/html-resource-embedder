@@ -78,7 +78,7 @@ let numberOfFilesToProcess = 0;
 let numberOfFilesProcessed = 0; // To track when we're done.
 let spinner = new Spinner('processing');
 
-spinner.setSpinnerString(10);
+spinner.setSpinnerString(3);
 spinner.start();
 
 const assertError = (err, msg) => {
@@ -108,7 +108,7 @@ const writeFile = (dom, filePath) => {
 
         if(++numberOfFilesProcessed == numberOfFilesToProcess) {
             console.log(chalk.green('Done :)'));
-            spinner.stop(); // This will end the script execution.
+            spinner.stop(true); // This will end the script execution if nothing else is queued.
         } else {
             Spinner.setSpinnerTitle(`processed ${numberOfFilesProcessed} out of ${numberOfFilesToProcess}`)
         }
@@ -133,11 +133,19 @@ const fetchAndEmbedResource = (tag, requiredAttributes, type, pathAttribute, new
                 console.log(chalk.red(`Unable to fetch ${type} ${src}`));
             } else {
                 if(type != 'image') {
-                    let data = fs.readFileSync(filePath);
+                    let data = fs.readFileSync(filePath, 'utf8');
 
                     delete tag.attribs.src;
 
                     if(type == 'stylesheet') {
+                        const regex = /url\((?:"|')?(.*?\.(?:jpg|gif|png|jpeg|exif|bmp|tiff|ppm|pgm|pbm|pnm|svg))(?:"|')?\)/gi;
+                        const baseResourceUrl = path.dirname(filePath);
+                        data = data.replace(regex, (match, p1) => {
+                            const p = path.join(baseResourceUrl, p1);
+                            verboseLog(`Fetching image for css resource ${chalk.blue(p)}`);
+                            return `url(${b64img.base64Sync(p)})`;
+                        }); // Embed image URLs
+
                         delete tag.attribs;
                     }
 
